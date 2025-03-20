@@ -26,8 +26,8 @@ This setup is built using
 Clone the repository and navigate to the project directory:
 
 ```sh
-$ git clone https://github.com/Nasruddin/Spark-scala-scaffold.git
-$ cd Spark-scala-scaffold
+$ git clone https://github.com/Nasruddin/spark-scala-scaffold.git
+$ cd spark-scala-scaffold
 ```
 
 ## Building the Project
@@ -59,7 +59,7 @@ $ spark-submit --class com.example.Main \
 ## Project Structure
 
 ```
-Spark-scala-scaffold/
+spark-scala-scaffold/
 ├── src/
 │   ├── main/
 │   │   ├── scala/com/example/
