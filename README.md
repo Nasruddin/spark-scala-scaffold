@@ -20,14 +20,6 @@ This setup is built using
 - Logging setup using **SLF4J**
 - Easy-to-run example with SparkSession
 
-## Prerequisites
-
-Ensure you have the following installed:
-
-- **Java 8+**
-- **Scala 2.12+**
-- **Apache Spark 3.x**
-- **SBT (Scala Build Tool)**
 
 ## Installation & Setup
 
