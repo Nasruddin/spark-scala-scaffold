@@ -6,10 +6,11 @@ This repository provides a scaffold for Apache Spark applications written in Sca
 
 ## Dependencies 
 This setup is built using
-- **Java 11**
+- **MacOS M3 Pro**
+- **Java 21**
 - **Scala 2.13.16**
 - **sbt 1.9.8**
-- **Spark 3.5.4**
+- **Spark 4.0.0**
 
 ## Features
 
@@ -26,33 +27,54 @@ This setup is built using
 Clone the repository and navigate to the project directory:
 
 ```sh
-$ git clone https://github.com/Nasruddin/spark-scala-scaffold.git
-$ cd spark-scala-scaffold
+git clone https://github.com/Nasruddin/spark-scala-scaffold.git
+cd spark-scala-scaffold
 ```
 
 ## Building the Project
 
 Compile and package the application using SBT:
 
-```sh
-$ sbt clean compile
-$ sbt package
+```shell
+sbt clean compile
+sbt package
 ```
 
 ## Running the Application
 
 Run the application locally using SBT:
 
-```sh
-$ sbt run --input-path data --output-path output
+```shell
+sbt "run --input-path data --output-path output" 
 ```
 
 Or submit the packaged JAR to a Spark cluster:
 
 ```sh
-$ spark-submit --class com.example.Main \
-  --master local[*] \
-  target/scala-2.12/spark-scala-scaffold_2.12-0.1.jar \
+wget https://repo1.maven.org/maven2/com/typesafe/config/1.4.3/config-1.4.3.jar
+```
+
+```shell
+sbt clean package
+```
+
+```shell
+spark-submit --class com.example.sparktutorial.SparkExampleMain \
+  --master "local[*]" \
+  — jars config-1.4.3.jar \
+  target/scala-2.13/sparktutorial_2.13-1.0.jar \
+  --input-path data --output-path output
+```
+
+Or submit packaged **fat JAR** 
+```shell
+sbt clean assembly
+```
+
+```shell
+spark-submit --class com.example.sparktutorial.SparkExampleMain \                                          ✔  took 5s   at 10:07:12 AM  
+  --master "local[*]" \
+  target/scala-2.13/sparktutorial-assembly-1.0.jar \
   --input-path data --output-path output
 ```
 
@@ -105,9 +127,9 @@ Add the following dependencies to your `build.sbt` file:
 
 ```scala
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "3.5.4",
-  "org.apache.spark" %% "spark-sql" % "3.5.4",
-  "com.typesafe" % "config" % "1.4.1"
+  "org.apache.spark" %% "spark-core" % "4.0.0" % Provided,
+  "org.apache.spark" %% "spark-sql" % "4.0.0" % Provided,
+  "com.typesafe" % "config" % "1.4.4",
 )
 ```
 

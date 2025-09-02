@@ -4,13 +4,13 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.SparkConf
 import com.example.sparktutorial.config.Configuration
 
-// to run = run --input-path data --output-path output
+// To run ---> sbt "run --input-path data --output-path output"
 
 package object sparktutorial {
 
-  val appName: String = Configuration.appName
+  private val appName: String = Configuration.appName
 
-  lazy val sparkConf: SparkConf = {
+  private lazy val sparkConf: SparkConf = {
     val coreConf = new SparkConf().setAppName(appName)
     Configuration.Spark.settings.foreach { case (key, value) =>
       coreConf.setIfMissing(key, value)
