@@ -5,8 +5,11 @@ organization := "com.example"
 version := "1.0"
 
 libraryDependencies ++= Seq(
-	"org.apache.spark" %% "spark-core" % "4.0.0" % Provided,
-	"org.apache.spark" %% "spark-sql" % "4.0.0" % Provided,
+/* use provided for assembly*/
+/* "org.apache.spark" %% "spark-core" % "4.0.0" % Provided,
+	"org.apache.spark" %% "spark-sql" % "4.0.0" % Provided,*/
+  "org.apache.spark" %% "spark-core" % "4.0.0",
+  "org.apache.spark" %% "spark-sql" % "4.0.0",
 	"com.typesafe" % "config" % "1.4.4",
 )
 
