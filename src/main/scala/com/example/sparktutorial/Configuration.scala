@@ -1,23 +1,42 @@
 package com.example.sparktutorial.config
 
 import com.typesafe.config.ConfigFactory
-import scala.collection.JavaConverters._
+import org.slf4j.LoggerFactory
+
+case class SparkSettings(
+  appName: String,
+  master: String,
+  executorMemory: String,
+  driverMemory: String,
+  shufflePartitions: String
+)
 
 object Configuration {
-    /* The config location can be overridden with -Dconfig.file=path/to/config-file */
-    private lazy val defaultConfig = ConfigFactory.load("application.conf")
-    private val config = ConfigFactory.load().withFallback(defaultConfig)
-
-    config.checkValid(ConfigFactory.defaultReference(), "default")
-
-    private lazy val appConfig = config.getConfig("default")
-    lazy val appName: String = appConfig.getString("appName")
-
-    object Spark {
-        private val spark = appConfig.getConfig("spark")
-        private val _settings = spark.getObject("settings")
-        
-        lazy val settings: Map[String, String] = _settings.unwrapped().asScala.map {case (k, v) => k -> v.toString}.toMap
-        print(s"settings: ${settings}")
-    }
+  private val logger = LoggerFactory.getLogger(getClass)
+  
+  private val config = ConfigFactory.load()
+  private val sparkConfig = config.getConfig("spark.settings")
+  
+  val sparkSettings: SparkSettings = try {
+    val settings = SparkSettings(
+      appName = sparkConfig.getString("appName"),
+      master = sparkConfig.getString("master"),
+      executorMemory = sparkConfig.getString("executorMemory"),
+      driverMemory = sparkConfig.getString("driverMemory"),
+      shufflePartitions = sparkConfig.getString("shufflePartitions")
+    )
+    logger.info(s"Loaded spark settings: $settings")
+    settings
+  } catch {
+    case e: Exception =>
+      logger.error(s"Failed to load configuration: ${e.getMessage}")
+      // Provide default settings if config fails
+      SparkSettings(
+        appName = "SparkScalaScaffold",
+        master = "local[*]",
+        executorMemory = "2g",
+        driverMemory = "2g",
+        shufflePartitions = "200"
+      )
+  }
 }

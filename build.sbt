@@ -11,6 +11,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "4.0.0",
   "org.apache.spark" %% "spark-sql" % "4.0.0",
 	"com.typesafe" % "config" % "1.4.4",
+  "org.slf4j" % "slf4j-api" % "1.7.36",
+  "org.scalatest" %% "scalatest" % "3.2.15" % Test
 )
 
 /*
